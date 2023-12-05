@@ -15,6 +15,8 @@ services:
     ports:
       - 3306:3306
   be:
+    depends_on:
+      - db
     image: node:20
     user: node
     tty: true
