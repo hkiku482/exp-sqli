@@ -1,0 +1,34 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    tty: true
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_database
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - .db/data:/var/lib/mysql
+      - .db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - .db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+  be:
+    image: node:20
+    user: node
+    tty: true
+    working_dir: '/home/node/app'
+    volumes:
+      - ./be:/home/node/app
+    ports:
+      - 4000:4000
+  fe:
+    image: node:20
+    user: node
+    tty: true
+    working_dir: '/home/node/app'
+    volumes:
+      - ./fe:/home/node/app
+    ports:
+      - 3000:3000
