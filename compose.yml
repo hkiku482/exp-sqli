@@ -12,15 +12,19 @@ services:
       - .db/data:/var/lib/mysql
       - .db/my.cnf:/etc/mysql/conf.d/my.cnf
       - .db/sql:/docker-entrypoint-initdb.d
-    ports:
-      - 3306:3306
   be:
+    depends_on:
+      - db
     build:
       context: be
-    ports:
-      - 4000:4000
   fe:
     build:
       context: fe
+  rp:
+    depends_on:
+      - be
+      - fe
+    build:
+      context: rp
     ports:
-      - 3000:3000
+      - 8080:80

@@ -8,6 +8,8 @@
 make local
 ```
 
+[http://localhost:8080]()
+
 #### Attach tty or debug
 
 ```
